@@ -1,4 +1,4 @@
-# Plant Care Assistant Android App Guide (Solo Project)
+# Plant Care Assistant Flutter App Guide (Solo Project)
 
 ## 1. 개인 목표 정리
 - [ ] 앱을 만드는 목적과 내가 얻고 싶은 경험을 문장으로 기록
@@ -15,53 +15,52 @@
 - [ ] 성공 기준: 식물을 선택하고 관리 카드(기본 정보)까지 확인할 수 있으면 완료
 
 ## 3. 개발 환경 세팅
-- [ ] Android Studio 최신 버전 설치 및 업데이트 확인
-- [ ] JDK 버전 확인(예: Temurin 17) 후 `JAVA_HOME` 설정
-- [ ] Android SDK, 빌드 도구, 에뮬레이터 이미지(테스트용) 설치
+- [ ] Flutter SDK 설치 (`flutter.dev` 지침) 후 PATH 등록
+- [ ] `flutter doctor` 실행해 Android toolchain, IDE(Flutter용 Android Studio/VS Code) 설정 확인
+- [ ] Android SDK, 에뮬레이터 이미지 준비 (Play Store용 가상 기기 포함)
+- [ ] Dart/Flutter 전용 코드 포맷터(`flutter format`)와 분석 옵션(`analysis_options.yaml`) 결정
 - [ ] Git 브랜치 전략 정리(메인만 사용할지, 기능 브랜치 활용할지)
-- [ ] 개인 코드 규칙과 포맷터(ktlint 등) 적용 여부 결정
 
 ## 4. 프로젝트 생성 & 구조 잡기
-- [ ] 새 Android 프로젝트 생성 (언어: Kotlin, 템플릿: Empty Activity or Compose)
-- [ ] 패키지 네이밍, `applicationId`, 버전 코드/이름 설정
-- [ ] Gradle 플러그인 및 라이브러리 버전 고정
-- [ ] UI 방식 선택 (Jetpack Compose 권장) 후 필요 의존성 추가
-- [ ] App 모듈 안에 패키지 구조 초안 작성 (`ui/`, `data/`, `model/` 등)
+- [ ] `flutter create plant_care_app` 등 명령으로 새 프로젝트 생성
+- [ ] `android/app/build.gradle`에서 `applicationId`, 버전 코드/이름 확인 및 수정
+- [ ] 프로젝트 루트의 `pubspec.yaml` 정리 (의존성, 자산 경로, 환경설정)
+- [ ] `lib/` 폴더 내 구조 초안 (`ui/`, `models/`, `services/`, `screens/`) 설계
+- [ ] 플랫폼별 설정 필요 시 `android/`, `ios/` 폴더 메모
 
 ## 5. 식물 선택 화면 UX 설계
-- [ ] 첫 화면 플로우 스케치: 앱 로딩 → 식물 선택 리스트 → 식물 상세로 이동
-- [ ] 필요한 UI 요소 목록 작성 (카드, 이미지, 필터 등)
-- [ ] 기본 테마 컬러/폰트 정의(간단한 스타일 가이드)
-- [ ] 빈 화면 상태 및 로딩 상태 디자인 결정
-- [ ] 접근성 체크: 텍스트 크기, 색 대비 메모
+- [ ] 첫 화면 플로우 스케치: 앱 로딩 → 식물 선택 리스트 → 식물 상세(또는 카드)로 이동
+- [ ] 필요한 Flutter UI 컴포넌트 목록 작성 (ListView/GridView, Card, Hero 애니메이션 등)
+- [ ] `ThemeData` 기반 기본 테마 컬러/폰트 정의
+- [ ] 빈 화면 상태 및 로딩 상태 위젯(스켈레톤/로더) 디자인 결정
+- [ ] 접근성 체크: 텍스트 크기, 색 대비, 스크린 리더 라벨 메모
 
-## 6. 데이터 준비
-- [ ] MVP에서 사용할 식물 데이터 JSON 혹은 Kotlin 데이터 클래스로 정리
+- [ ] MVP에서 사용할 식물 데이터 JSON 혹은 Dart 모델 클래스로 정리
 - [ ] 각 식물별 이미지 자산 확보(직접 촬영/무료 이미지)
 - [ ] 물 주기, 햇빛, 난이도 등 기본 속성 정의
 - [ ] 로컬 리포지토리 구현 계획 작성 (간단한 in-memory 또는 Room)
 - [ ] 향후 확장을 대비해 데이터 스키마 주석으로 기록
 
 ## 7. 기본 기능 구현
-- [ ] 앱 첫 화면을 식물 선택 리스트로 구성 (RecyclerView or Compose LazyColumn)
-- [ ] 식물 선택 시 상세 화면으로 네비게이션 구현
-- [ ] 상세 화면에서 기본 정보(사진, 설명, 관리 팁) 표시
-- [ ] 좋아요/즐겨찾기 버튼(선택 사항) 여부 결정 및 TODO 처리
-- [ ] 간단한 물 주기 알림 로직 초안 작성(WorkManager 사용 여부 메모)
+- [ ] 첫 화면을 식물 선택 리스트로 구성 (`ListView.builder` 또는 `GridView.builder`)
+- [ ] 식물 선택 시 `Navigator.push`로 상세 화면 이동, Hero/AnimatedSwitcher 검토
+- [ ] 상세 화면에서 기본 정보(사진, 설명, 관리 팁) 표시 위젯 구성
+- [ ] 즐겨찾기/태그 버튼 등 부가 요소 필요 여부 결정 후 TODO 추가
+- [ ] 물 주기 알림 초안: `flutter_local_notifications` 또는 플랫폼 채널 여부 기록
 
 ## 8. 품질 점검
-- [ ] 주요 ViewModel/UseCase에 단위 테스트 작성 여부 결정
-- [ ] 에뮬레이터, 실제 기기에서 레이아웃 깨짐 확인
-- [ ] 다크모드/라이트모드 수준에서 최소 확인
-- [ ] 기본 성능(첫 화면 로딩 시간) 체크 및 메모
+- [ ] 주요 로직을 `flutter_test`로 단위 테스트 구성 (예: 모델, 서비스)
+- [ ] `golden test` 또는 위젯 테스트 도입 여부 판단
+- [ ] 에뮬레이터와 실제 기기에서 레이아웃/퍼포먼스 확인
+- [ ] 다크모드/라이트모드, 폰트 스케일 변경 대응 테스트
 - [ ] 개인 QA 체크리스트 작성 후 모두 체크
 
 ## 9. 배포 준비 (선택)
-- [ ] 사인드 APK/AAB 생성 절차 메모
-- [ ] 앱 아이콘, 스플래시 이미지 적용
+- [ ] `flutter build apk`/`appbundle` 절차 테스트 및 서명 키 관리
+- [ ] 앱 아이콘(`flutter_launcher_icons`), 스플래시(`flutter_native_splash`) 적용
 - [ ] 개인정보 처리 관련 이슈 없는지 확인(없다면 "개인 사용" 명시)
-- [ ] Play 스토어 배포를 한다면 스크린샷, 설명 초안 작성
-- [ ] 버전 업로드 시 커밋/태그 전략 정리
+- [ ] Play 스토어 배포 계획 시 스크린샷, 설명 초안, 국가 설정 메모
+- [ ] 버전 업로드 시 `pubspec.yaml` 버전 관리 및 Git 태깅 전략 정리
 
 ## 10. 백로그 & 확장 아이디어
 - [ ] 알림 스케줄러 고도화(날씨, 실내 환경 데이터 연동)
