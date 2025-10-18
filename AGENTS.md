@@ -6,7 +6,7 @@
 ## 빌드, 테스트 및 개발 명령어
 `python -m venv .venv && source .venv/bin/activate`로 격리된 환경을 생성하세요. `requirements.txt`에 선언된 의존성을 `pip install -r requirements.txt`로 설치하세요. 메인 에이전트 하네스를 `python -m src.agents.cli`로 실행하세요. `make lint`로 포매터와 정적 분석을 집계하고, `make test`로 전체 테스트 매트릭스를 실행하세요. 새로운 도구를 추가할 때마다 `Makefile`을 업데이트하여 기여자들이 단일 진입점을 갖도록 하세요.
 
-## 코딩 스타일 및a 명명 규칙
+## 코딩 스타일 및 명명 규칙
 4칸 들여쓰기로 PEP 8을 준수하세요. 타입 힌트를 포함하고 `mypy`를 통과하도록 유지하세요. 이는 `make lint`에 연결되어 있습니다. 모듈과 패키지는 snake_case로 명명하고 (`agent_router.py`) 클래스는 PascalCase로 명명하세요 (`AgentRouter`). 관련 설정을 `src/config/`에 그룹화하고 환경 기본값을 `config.py`를 통해 노출하세요. 샘플 설정은 `.env.example`에 저장하고 실제 비밀은 절대 커밋하지 마세요.
 
 ## 테스트 가이드라인
